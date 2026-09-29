@@ -20,7 +20,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - if: vars.RELEASE_APP_ID == ''
-        run: echo "::notice::the organization's app is not installed yet (RELEASE_APP_ID): run scripts/sync_labels.py by hand"
+        run: |
+          echo "::notice::the organization's app is not installed yet (RELEASE_APP_ID): run scripts/sync_labels.py by hand"
       - id: app
         if: vars.RELEASE_APP_ID != ''
         uses: actions/create-github-app-token@v2
