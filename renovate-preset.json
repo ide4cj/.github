@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "ide4cj's clients: the cjls pin moved after the Monday release train (cjls's D32), everything else grouped, Mondays",
+  "extends": ["config:recommended", ":semanticCommits"],
+  "schedule": ["after 9am on monday"],
+  "labels": ["dependencies"],
+  "customManagers": [
+    {
+      "description": "cangjie-vscode and cangjie-zed: .cjls-version",
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)\\.cjls-version$/"],
+      "matchStrings": ["^(?<currentValue>v\\S+)"],
+      "depNameTemplate": "ide4cj/cjls",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": "cangjie.nvim: CJLS_VERSION in lua/cangjie/install.lua",
+      "customType": "regex",
+      "managerFilePatterns": ["/^lua/cangjie/install\\.lua$/"],
+      "matchStrings": ["local CJLS_VERSION = '(?<currentValue>v[^']+)'"],
+      "depNameTemplate": "ide4cj/cjls",
+      "datasourceTemplate": "github-releases"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "a new cjls is a fix of the client, and the stable release that follows its merge",
+      "matchDepNames": ["ide4cj/cjls"],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "cjls",
+      "commitMessageTopic": "cjls"
+    },
+    {
+      "description": "cangjie-zed downloads the newest cjls of its minor by itself: its pin moves, and it is released to Zed's registry, on a new minor only",
+      "matchRepositories": ["ide4cj/cangjie-zed"],
+      "matchDepNames": ["ide4cj/cjls"],
+      "matchUpdateTypes": ["patch"],
+      "enabled": false
+    },
+    {
+      "description": "the rest in one PR a week",
+      "matchPackageNames": ["!ide4cj/cjls"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "dependencies"
+    }
+  ]
+}

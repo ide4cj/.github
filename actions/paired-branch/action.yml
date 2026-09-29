@@ -1,0 +1,34 @@
+name: Paired branch
+description: >
+  The branch of another ide4cj repository to test against: the one named like this run's branch
+  when that repository has it (a change made in both, cjls's D32), else empty, its default branch.
+
+inputs:
+  repository:
+    description: The other repository, owner/name
+    required: true
+  branch:
+    description: The branch to look for; this run's own by default
+    required: false
+    default: ${{ github.head_ref || github.ref_name }}
+
+outputs:
+  ref:
+    description: The paired branch, or empty for the repository's default branch
+    value: ${{ steps.find.outputs.ref }}
+
+runs:
+  using: composite
+  steps:
+    - id: find
+      shell: bash
+      env:
+        REPOSITORY: ${{ inputs.repository }}
+        BRANCH: ${{ inputs.branch }}
+      run: |
+        if [ -n "$BRANCH" ] && git ls-remote --exit-code --heads "https://github.com/$REPOSITORY.git" "refs/heads/$BRANCH" >/dev/null; then
+          echo "::notice::$REPOSITORY at its branch $BRANCH, paired with this one"
+          echo "ref=$BRANCH" >> "$GITHUB_OUTPUT"
+        else
+          echo "ref=" >> "$GITHUB_OUTPUT"
+        fi

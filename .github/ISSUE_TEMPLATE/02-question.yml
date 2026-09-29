@@ -1,0 +1,20 @@
+name: ❓ Open question
+description: Something knowingly left undone, and the way to do it is open 🤔
+title: "[Question]: "
+labels: ["question", "S-needs-triage"]
+projects: ["ide4cj/1"]
+assignees:
+  - FilaCo
+body:
+  - type: textarea
+    attributes:
+      label: Context
+      description: What is left undone, what it blocks, and the references (R#) and rules (S#, A#, D#) it touches.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Options
+      description: The ways to do it known so far, and what would decide between them. An ADR or rule that closes the question names this issue.
+    validations:
+      required: false

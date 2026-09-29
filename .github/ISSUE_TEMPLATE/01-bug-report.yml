@@ -1,0 +1,88 @@
+name: 🐜 Bug report
+description: If something isn't working 🔧
+title: "[Bug]: "
+labels: ["C-bug", "S-needs-triage"]
+projects: ["ide4cj/1"]
+assignees:
+  - FilaCo
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Open it where you met it: the server
+        and the editor clients triage together, and an issue moves to the repository that fixes it.
+  - type: textarea
+    attributes:
+      label: What is the expected behavior?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What is the actual behavior?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: How to reproduce the issue?
+      description: The smallest Cangjie project that shows it, its `cjpm.toml` included.
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Editor
+      options:
+        - VS Code
+        - Neovim
+        - Zed
+        - Another editor, driving cjls directly
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Editor version
+      placeholder: "1.105.0, NVIM v0.11.4, Zed 0.210.3"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Client version
+      description: The version of cangjie-vscode, cangjie.nvim's commit or cangjie-zed; empty for another editor.
+    validations:
+      required: false
+  - type: input
+    attributes:
+      label: cjls version
+      description: "The server's version as the editor shows it (`serverInfo`), or the release you downloaded: `v0.1.0`, `nightly` and its date."
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Operating system
+      placeholder: "macOS 26 arm64, Ubuntu 24.04 x64, Windows 11 x64"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: The server's log
+      description: |
+        With `CJLS_LOG_LEVEL=DEBUG` in the server's environment: in VS Code the `cjls` output channel,
+        in Neovim `:LspLog`, in Zed `dev: open language server logs`.
+      render: text
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Any possible solutions?
+    validations:
+      required: false
+  - type: dropdown
+    attributes:
+      label: If the bug is confirmed, would you be willing to submit a PR?
+      description: |
+        Help can be provided if you need assistance submitting a PR
+      options:
+        - 'Yes'
+        - 'No'
+      default: 1
+    validations:
+      required: true

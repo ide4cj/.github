@@ -1,0 +1,101 @@
+# The labels of every ide4cj repository, synced by scripts/sync_labels.py (cjls's D32). A label
+# named here is created or updated, one of its `aliases` renamed to it (its issues keep it); a label
+# named nowhere is left alone.
+
+# C-: what kind of issue
+- name: C-bug
+  color: d73a4a
+  description: Something isn't working
+  aliases: [bug]
+- name: C-feature
+  color: a2eeef
+  description: New feature or request
+  aliases: [enhancement]
+- name: C-tracking
+  color: 5319e7
+  description: A parent issue whose sub-issues do the work, across repositories too
+- name: C-docs
+  color: 0075ca
+  description: Documentation
+  aliases: [documentation]
+- name: question
+  color: d876e3
+  description: An open question, knowingly left undone; an ADR or a rule that closes it names it
+
+# S-: where it stands
+- name: S-needs-triage
+  color: fbca04
+  description: Not looked at yet
+- name: S-actionable
+  color: 0e8a16
+  description: Clear what to do; anyone may take it
+- name: S-blocked
+  color: b60205
+  description: Waits on another issue, here or upstream
+- name: S-waiting-on-author
+  color: c5def5
+  description: Waits on whoever opened it
+
+# E-: what it takes
+- name: E-easy
+  color: 7057ff
+  description: A good first issue
+  aliases: [good first issue]
+- name: E-hard
+  color: 3e2c70
+  description: Needs a design, or deep knowledge of the code
+- name: E-help-wanted
+  color: 008672
+  description: Help is welcome
+  aliases: [help wanted]
+
+# A-: which part (the server's; a client's are its repository)
+- name: A-analysis
+  color: f9d0c4
+  description: loupe, calca, and what they answer
+- name: A-syntax
+  color: f9d0c4
+  description: The lexer, the parser, the syntax tree
+- name: A-protocol
+  color: f9d0c4
+  description: JSON-RPC, LSP, the server's extensions and settings
+- name: A-highlighting
+  color: f9d0c4
+  description: Semantic tokens, grammars
+- name: A-performance
+  color: f9d0c4
+  description: Speed and memory
+- name: A-install
+  color: f9d0c4
+  description: Getting the server binary to the editor
+- name: A-infra
+  color: f9d0c4
+  description: Builds, CI, releases, the toolchain
+
+# client: which editor client; needs-server: a client's issue the server has to move first
+- name: client:nvim
+  color: 57a143
+  description: cangjie.nvim
+- name: client:vscode
+  color: 007acc
+  description: cangjie-vscode
+- name: client:zed
+  color: 084ccf
+  description: cangjie-zed
+- name: needs-server
+  color: e99695
+  description: Waits on a change in cjls (a paired branch, D32)
+
+# GitHub's own that stay
+- name: duplicate
+  color: cfd3d7
+  description: This issue or pull request already exists
+- name: invalid
+  color: e4e669
+  description: This doesn't seem right
+- name: wontfix
+  color: ffffff
+  description: This will not be worked on
+- name: dependencies
+  color: 0366d6
+  description: A dependency or a pin moved, by Renovate or Dependabot

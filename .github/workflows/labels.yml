@@ -1,0 +1,38 @@
+name: Labels
+
+# labels.yml onto every repository of the organization, with the organization's app (its token
+# reaches every repository; GITHUB_TOKEN only this one)
+on:
+  push:
+    branches: [main]
+    paths: [labels.yml, scripts/sync_labels.py]
+  schedule:
+    - cron: "0 5 * * 1" # Mondays: repositories made since
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Sync labels
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - if: vars.RELEASE_APP_ID == ''
+        run: echo "::notice::the organization's app is not installed yet (RELEASE_APP_ID): run scripts/sync_labels.py by hand"
+      - id: app
+        if: vars.RELEASE_APP_ID != ''
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+      - if: steps.app.outputs.token
+        uses: actions/checkout@v4
+      - if: steps.app.outputs.token
+        uses: astral-sh/setup-uv@v6
+      - if: steps.app.outputs.token
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: uv run scripts/sync_labels.py
