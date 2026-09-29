@@ -2,22 +2,8 @@
 # named here is created or updated, one of its `aliases` renamed to it (its issues keep it); a label
 # named nowhere is left alone.
 
-# C-: what kind of issue
-- name: C-bug
-  color: d73a4a
-  description: Something isn't working
-  aliases: [bug]
-- name: C-feature
-  color: a2eeef
-  description: New feature or request
-  aliases: [enhancement]
-- name: C-tracking
-  color: 5319e7
-  description: A parent issue whose sub-issues do the work, across repositories too
-- name: C-docs
-  color: 0075ca
-  description: Documentation
-  aliases: [documentation]
+# What kind of issue is its type (Bug, Feature, Task), the organization's, not a label.
+# question: an open design question (cjls's docs/README.md), whatever its type
 - name: question
   color: d876e3
   description: An open question, knowingly left undone; an ADR or a rule that closes it names it
