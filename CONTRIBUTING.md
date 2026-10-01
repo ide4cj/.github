@@ -16,9 +16,10 @@ on every commit and on the PR's title, which becomes the commit: PRs are squash-
 The server does what LSP can; a client finds the binary, passes settings, and gives the server's
 extensions their UI. A feature a client needs from the server is therefore two changes:
 
-1. **One branch name in both repositories**, say `feat/expand-macro`. cjls's CI runs every client's
-   tests at the branch of its own name when the client has one; a client's CI takes cjls's build of
-   that branch (`actions/cjls` here). Both PRs are green against each other before either merges.
+1. **One branch name in both repositories**, say `feat/expand-macro`. A client's CI takes cjls's
+   build of that branch (`actions/cjls` here), so the pair is checked there; cjls's CI runs no
+   client, it holds the server to the protocol by its `tests/e2e`, and a client's failure that is the
+   server's becomes a case there. Both PRs are green before either merges.
 2. **The server merges first**, its extension behind an `experimental` capability and described in
    [`lsp-extensions.md`](https://github.com/ide4cj/cjls/blob/master/docs/lsp-extensions.md) (a
    test holds the file to the code). The client gates on that capability, never on a version, and
