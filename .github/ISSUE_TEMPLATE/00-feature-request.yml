@@ -1,7 +1,8 @@
 name: 🚀 Feature Request
 description: If you have a feature request 💡
 title: "[Feature]: "
-labels: ["C-feature", "S-needs-triage"]
+type: Feature
+labels: ["S-needs-triage"]
 projects: ["ide4cj/1"]
 assignees:
   - FilaCo
