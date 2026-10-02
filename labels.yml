@@ -8,18 +8,16 @@
   color: d876e3
   description: An open question, knowingly left undone; an ADR or a rule that closes it names it
 
-# S-: what it waits on. Whether it is triaged is its priority on the board, where it stands the
-# board's Status
+# S-: gone. Whether it is triaged is its priority on the board, where it stands (Blocked among
+# them) the board's Status
 - name: S-needs-triage
   removed: true
 - name: S-actionable
   removed: true
 - name: S-blocked
-  color: b60205
-  description: Waits on another issue, here or upstream
+  removed: true
 - name: S-waiting-on-author
-  color: c5def5
-  description: Waits on whoever opened it
+  removed: true
 
 # E-: what it takes
 - name: E-easy
