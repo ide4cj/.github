@@ -61,5 +61,5 @@ PRs merged and the clients released.
 
 | | |
 |---|---|
-| `ide4cj/.github/actions/paired-branch@main` | the branch of another repository named like this run's, or its default |
-| `ide4cj/.github/actions/cjls@main` | the cjls binary for a client's tests: the paired branch's build, else a release (the pin or `nightly`) |
+| `ide4cj/.github/actions/paired-branch@master` | the branch of another repository named like this run's, or its default |
+| `ide4cj/.github/actions/cjls@master` | the cjls binary for a client's tests: the paired branch's build, else a release (the pin or `nightly`) |

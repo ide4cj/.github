@@ -13,4 +13,4 @@ uv run scripts/sync_labels.py             # every repository, or name some: ide4
 
 The app: `RELEASE_APP_ID` (a variable) and `RELEASE_APP_KEY` (a secret) of the organization, the app
 installed on every repository with contents, issues and administration write, and in the bypass
-list of each `master`/`main` ruleset. cjls's release train pushes with it too.
+list of each `master` ruleset. cjls's release train pushes with it too.
