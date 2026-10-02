@@ -1,6 +1,6 @@
 # The labels of every ide4cj repository, synced by scripts/sync_labels.py (cjls's D32). A label
-# named here is created or updated, one of its `aliases` renamed to it (its issues keep it); a label
-# named nowhere is left alone.
+# named here is created or updated, one of its `aliases` renamed to it (its issues keep it), one
+# marked `removed` deleted; a label named nowhere is left alone.
 
 # What kind of issue is its type (Bug, Feature, Task), the organization's, not a label.
 # question: an open design question (cjls's docs/README.md), whatever its type
@@ -8,13 +8,12 @@
   color: d876e3
   description: An open question, knowingly left undone; an ADR or a rule that closes it names it
 
-# S-: where it stands
+# S-: what it waits on. Whether it is triaged is its priority on the board, where it stands the
+# board's Status
 - name: S-needs-triage
-  color: fbca04
-  description: Not looked at yet
+  removed: true
 - name: S-actionable
-  color: 0e8a16
-  description: Clear what to do; anyone may take it
+  removed: true
 - name: S-blocked
   color: b60205
   description: Waits on another issue, here or upstream

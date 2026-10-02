@@ -43,19 +43,33 @@ or setting stays two releases.
 
 ## Issues and labels
 
+Every open issue of the organization is on [one board](https://github.com/orgs/ide4cj/projects/1)
+(`.github/workflows/project.yml` adds those an issue form did not), and its priority is the board's
+**Priority**, not a label:
+
+| | |
+|---|---|
+| **P0** | broken for a user now: a crash, a lost answer, no install. Taken before anything else |
+| **P1** | on the way to the current goal |
+| **P2** | some day |
+| none | not triaged yet |
+
+The current goal: **name resolution** — the analysis below it first (cjls#119), then go to
+definition. A new goal is a change of this line.
+
 An issue's kind is its type (Bug, Feature, Task), set for the whole organization. [`labels.yml`](labels.yml) is every repository's labels, synced by `.github/workflows/labels.yml`:
 
 | prefix | what | |
 |---|---|---|
 | — | kind | the issue's **type**: Bug, Feature, Task; `question` labels an open design question |
-| `S-` | status | `S-needs-triage` (every new issue), `S-actionable`, `S-blocked`, `S-waiting-on-author` |
+| `S-` | what it waits on | `S-blocked`, `S-waiting-on-author`; where it stands is the board's Status |
 | `E-` | effort | `E-easy`, `E-hard`, `E-help-wanted` |
 | `A-` | part of the server | `A-analysis`, `A-syntax`, `A-protocol`, `A-highlighting`, `A-performance`, `A-install`, `A-infra` |
 | `client:` | editor client | `client:nvim`, `client:vscode`, `client:zed`; `needs-server`: waits on cjls |
 
 On Mondays: the red daily runs first (each client opens an issue when its run against `nightly` and
-the editor's own nightly fails), then triage (`S-`, `A-`, `client:`), then the release train, the pin
-PRs merged and the clients released.
+the editor's own nightly fails), then triage (every issue without a priority gets one, and its `A-`
+or `client:`), then the release train, the pin PRs merged and the clients released.
 
 ## Shared actions
 
