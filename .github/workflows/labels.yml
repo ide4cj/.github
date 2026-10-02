@@ -4,7 +4,7 @@ name: Labels
 # reaches every repository; GITHUB_TOKEN only this one)
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths: [labels.yml, scripts/sync_labels.py]
   schedule:
     - cron: "0 5 * * 1" # Mondays: repositories made since
