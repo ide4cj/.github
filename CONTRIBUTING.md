@@ -45,7 +45,8 @@ or setting stays two releases.
 
 Every open issue of the organization is on [one board](https://github.com/orgs/ide4cj/projects/1)
 (`.github/workflows/project.yml` adds those an issue form did not), and its priority is the board's
-**Priority**, not a label:
+**Priority**, not a label, as where it stands is its **Status** (Backlog, Ready, In progress,
+Blocked — on another issue, upstream, or whoever opened it —, In review, Done):
 
 | | |
 |---|---|
@@ -62,7 +63,6 @@ An issue's kind is its type (Bug, Feature, Task), set for the whole organization
 | prefix | what | |
 |---|---|---|
 | — | kind | the issue's **type**: Bug, Feature, Task; `question` labels an open design question |
-| `S-` | what it waits on | `S-blocked`, `S-waiting-on-author`; where it stands is the board's Status |
 | `E-` | effort | `E-easy`, `E-hard`, `E-help-wanted` |
 | `A-` | part of the server | `A-analysis`, `A-syntax`, `A-protocol`, `A-highlighting`, `A-performance`, `A-install`, `A-infra` |
 | `client:` | editor client | `client:nvim`, `client:vscode`, `client:zed`; `needs-server`: waits on cjls |
