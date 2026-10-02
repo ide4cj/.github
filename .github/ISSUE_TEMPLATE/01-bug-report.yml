@@ -2,7 +2,6 @@ name: 🐜 Bug report
 description: If something isn't working 🔧
 title: "[Bug]: "
 type: Bug
-labels: ["S-needs-triage"]
 projects: ["ide4cj/1"]
 assignees:
   - FilaCo

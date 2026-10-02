@@ -9,7 +9,8 @@
 
 With no repo, every repository of the organization that is not archived. A label of labels.yml is
 created, or its color and description updated; a label named by one of its `aliases` is renamed to
-it, so its issues keep it. Labels labels.yml does not name are left alone.
+it, so its issues keep it; a label marked `removed` is deleted. Labels labels.yml does not name are
+left alone.
 """
 
 import json
@@ -39,6 +40,12 @@ def gh_list(path: str) -> list[dict]:
 def sync(repo: str, wanted: list[dict], dry_run: bool) -> None:
     have = {label["name"].lower(): label for label in gh_list(f"repos/{repo}/labels")}
     for label in wanted:
+        if label.get("removed"):
+            if label["name"].lower() in have:
+                print(f"{repo}: delete {label['name']}")
+                if not dry_run:
+                    gh("-X", "DELETE", f"repos/{repo}/labels/{urllib.parse.quote(label['name'], safe='')}")
+            continue
         body = {"color": label["color"], "description": label.get("description", "")}
         old = next((have[a.lower()] for a in [label["name"], *label.get("aliases", [])] if a.lower() in have), None)
         if old is None:

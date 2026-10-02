@@ -1,7 +1,7 @@
 name: ❓ Open question
 description: Something knowingly left undone, and the way to do it is open 🤔
 title: "[Question]: "
-labels: ["question", "S-needs-triage"]
+labels: ["question"]
 projects: ["ide4cj/1"]
 assignees:
   - FilaCo
