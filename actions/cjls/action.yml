@@ -1,12 +1,12 @@
 name: cjls
 description: >
   The cjls binary for this runner, for a client's tests (cjls's D32): the build CI made of the
-  branch named like this run's when cjls has one, else the release `version` names — a tag, `nightly`,
+  branch named like this run's when cjls has one, else the release `version` names — a tag (`nightly-build` too),
   or empty for the latest. `path` is empty, with a notice, when there is no such build or release.
 
 inputs:
   version:
-    description: A release tag (the client's pin), `nightly` (cjls's `nightly-build`), or empty for the latest release
+    description: A release tag (the client's pin) or `nightly-build`, or empty for the latest release
     required: false
     default: ""
   branch:
@@ -46,8 +46,6 @@ runs:
           Linux) target=x86_64-unknown-linux-gnu; format=tar.gz; exe=cjls ;;
           Windows) target=x86_64-pc-windows-gnu; format=zip; exe=cjls.exe ;;
         esac
-        # the word `nightly` is cjls's pre-release `nightly-build` (cjls's D38)
-        if [ "$VERSION" = nightly ]; then VERSION=nightly-build; fi
         dir="$RUNNER_TEMP/cjls-bin"
         mkdir -p "$dir"
         source=""
