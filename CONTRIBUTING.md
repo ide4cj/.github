@@ -23,7 +23,7 @@ extensions their UI. A feature a client needs from the server is therefore two c
 2. **The server merges first**, its extension behind an `experimental` capability and described in
    [`lsp-extensions.md`](https://github.com/ide4cj/cjls/blob/master/docs/lsp-extensions.md) (a
    test holds the file to the code). The client gates on that capability, never on a version, and
-   merges once cjls's `nightly` has it.
+   merges once cjls's `nightly-build` has it.
 3. The client's stable release follows the next cjls release, when its pin moves.
 
 Track it as a parent issue in cjls (type Task) with a sub-issue in each client.
@@ -32,10 +32,10 @@ Track it as a parent issue in cjls (type Task) with a sub-issue in each client.
 
 | | stable | follows master |
 |---|---|---|
-| cjls | a release every Monday from a green master (`vX.Y.Z`) | `nightly`, every night, master's newest green commit |
+| cjls | a release every Monday from a green master (`vX.Y.Z`) | `nightly-build`, every night, master's newest green commit |
 | cangjie-vscode | even minor, the pinned cjls inside | pre-release, odd minor, the nightly inside |
-| cangjie.nvim | the pinned cjls, downloaded | `vim.g.cjls_version = 'nightly'` |
-| cangjie-zed | the newest cjls within its minor | `"lsp": { "cjls": { "settings": { "version": "nightly" } } }` |
+| cangjie.nvim | the pinned cjls, downloaded | `vim.g.cjls_version = 'nightly-build'` |
+| cangjie-zed | the newest cjls within its minor | `"lsp": { "cjls": { "settings": { "version": "nightly-build" } } }` |
 
 A client's pin is bumped by Renovate on Mondays, after the release; the client releases once that PR
 is merged. A client supports the server's current minor and the one before; a deprecated extension
@@ -67,7 +67,7 @@ An issue's kind is its type (Bug, Feature, Task), set for the whole organization
 | `A-` | part of the server | `A-analysis`, `A-syntax`, `A-protocol`, `A-highlighting`, `A-performance`, `A-install`, `A-infra` |
 | `client:` | editor client | `client:nvim`, `client:vscode`, `client:zed`; `needs-server`: waits on cjls |
 
-On Mondays: the red daily runs first (each client opens an issue when its run against `nightly` and
+On Mondays: the red daily runs first (each client opens an issue when its run against `nightly-build` and
 the editor's own nightly fails), then triage (every issue without a priority gets one, and its `A-`
 or `client:`), then the release train, the pin PRs merged and the clients released.
 
@@ -76,4 +76,4 @@ or `client:`), then the release train, the pin PRs merged and the clients releas
 | | |
 |---|---|
 | `ide4cj/.github/actions/paired-branch@master` | the branch of another repository named like this run's, or its default |
-| `ide4cj/.github/actions/cjls@master` | the cjls binary for a client's tests: the paired branch's build, else a release (the pin or `nightly`) |
+| `ide4cj/.github/actions/cjls@master` | the cjls binary for a client's tests: the paired branch's build, else a release (the pin or `nightly-build`) |
