@@ -27,7 +27,9 @@ def graphql(query: str, **variables: object) -> dict:
     cmd = ["gh", "api", "graphql", "-f", f"query={query}"]
     for name, value in variables.items():
         cmd += ["-F" if isinstance(value, int) else "-f", f"{name}={value}"]
-    out = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    out = subprocess.run(cmd, capture_output=True, text=True)
+    if out.returncode != 0:
+        sys.exit(f"gh api graphql failed: {out.stderr.strip() or out.stdout.strip()}")
     return json.loads(out.stdout)["data"]
 
 
