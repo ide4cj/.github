@@ -55,8 +55,12 @@ Blocked — on another issue, upstream, or whoever opened it —, In review, Don
 | **P2** | some day |
 | none | not triaged yet |
 
-The current goal: **name resolution** — the analysis below it first (cjls#119), then go to
-definition. A new goal is a change of this line.
+The current goal is three milestones of cjls, worked on side by side:
+[**First five minutes**](https://github.com/ide4cj/cjls/milestone/1) (what a user meets on a real
+project before any feature), [**Inference**](https://github.com/ide4cj/cjls/milestone/2) (cjls#48 to
+its end and the requests it opens) and [**Macro expansion**](https://github.com/ide4cj/cjls/milestone/3)
+(cjls#47). [**Cleanup**](https://github.com/ide4cj/cjls/milestone/4), every module refined
+(cjls#206), comes after them: its issues are P2 until then. A new goal is a change of this paragraph.
 
 An issue's kind is its type (Bug, Feature, Task), set for the whole organization. [`labels.yml`](labels.yml) is every repository's labels, synced by `.github/workflows/labels.yml`:
 
