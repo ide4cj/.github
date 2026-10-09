@@ -80,4 +80,4 @@ or `client:`), then the release train, the pin PRs merged and the clients releas
 | | |
 |---|---|
 | `ide4cj/.github/actions/paired-branch@master` | the branch of another repository named like this run's, or its default |
-| `ide4cj/.github/actions/cjls@master` | the cjls binary for a client's tests: the paired branch's build, else a release (the pin or `nightly-build`) |
+| `ide4cj/.github/actions/cjls@master` | the cjls binary for a client's tests: the paired branch's build of its head, waited for, the step failing when it failed or is missing; else a release (the pin or `nightly-build`). Its decision is `actions/cjls/paired-run.sh`, tested by `bash actions/cjls/paired-run.test.sh` |

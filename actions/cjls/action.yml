@@ -1,8 +1,10 @@
 name: cjls
 description: >
-  The cjls binary for this runner, for a client's tests (cjls's D32): the build CI made of the
-  branch named like this run's when cjls has one, else the release `version` names — a tag (`nightly-build` too),
-  or empty for the latest. `path` is empty, with a notice, when there is no such build or release.
+  The cjls binary for this runner, for a client's tests (cjls's D32): when cjls has a branch named like
+  this run's, the build its CI made of that branch's head, waited for while it runs, and the step fails
+  when that run failed or there is none (after the branch's merge, its newest run); else the release
+  `version` names — a tag (`nightly-build` too), or empty for the latest. `path` is empty, with a notice,
+  when there is no such release.
 
 inputs:
   version:
@@ -14,7 +16,7 @@ inputs:
     required: false
     default: ${{ github.head_ref || (github.ref_name != github.event.repository.default_branch && github.ref_name) || '' }}
   releases:
-    description: "`false`: the paired branch's build alone, for a client that downloads releases by its own installer"
+    description: "`false`: the paired branch's build alone, `path` empty without one, for a client that downloads releases by its own installer"
     required: false
     default: "true"
   token:
@@ -50,9 +52,14 @@ runs:
         mkdir -p "$dir"
         source=""
         if [ -n "$BRANCH" ] && [ "$BRANCH" != master ]; then
-          run=$(gh run list --repo ide4cj/cjls --workflow ci.yml --branch "$BRANCH" --status success --limit 1 \
-            --json databaseId --jq '.[0].databaseId // empty' 2>/dev/null || true)
-          if [ -n "$run" ] && gh run download "$run" --repo ide4cj/cjls --name "cjls-$RUNNER_OS" --dir "$dir"; then
+          # a pair is tested against its head's build or fails here, never a release or an older build
+          # forward slashes: Git Bash on Windows reads D:/a/..., the runner gives D:\a\...
+          run=$(bash "${GITHUB_ACTION_PATH//\\//}/paired-run.sh" "$BRANCH")
+          if [ -n "$run" ]; then
+            if ! gh run download "$run" --repo ide4cj/cjls --name "cjls-$RUNNER_OS" --dir "$dir"; then
+              echo "::error::no cjls-$RUNNER_OS in https://github.com/ide4cj/cjls/actions/runs/$run"
+              exit 1
+            fi
             source="ide4cj/cjls@$BRANCH, CI run $run"
           fi
         fi
