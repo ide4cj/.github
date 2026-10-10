@@ -9,9 +9,11 @@ failures=0
 fail() { echo "FAIL $case: $*"; failures=$((failures + 1)); }
 
 # the fake: HEAD (a sha, or "404", or "500"), RUNS ("<branch>@<sha or *>=<id status conclusion>" lines),
-# VIEWS ("<id status conclusion>" lines, one per `gh run view`, the run after each watch); CALLS logs
+# VIEWS ("<id status conclusion>" lines, one per `gh run view`, the run after each watch), WARN (printed on
+# stderr by every call when set); CALLS logs
 gh() {
   echo "$*" >>"$CALLS"
+  [ -z "${WARN:-}" ] || echo "$WARN" >&2
   case "$1 $2" in
     "api repos/$REPO/branches/"*)
       case $HEAD in
@@ -99,6 +101,15 @@ HEAD=new RUNS="feat/x@new=2 waiting"
 VIEWS="2 in_progress
 2 completed success"
 check "a run still unfinished after a watch is watched again" 0 2 "" "run watch 2"
+
+VIEWS="2 in_progress
+2 in_progress
+2 in_progress"
+check "a run still unfinished after three watches fails the step" 1 "" "still in_progress after 3 waits: .*/runs/2" "run watch 2"
+
+WARN="A new release of gh is available" RUNS="feat/x@new=2 completed success"
+check "a notice gh prints on stderr is not read as the head's sha" 0 2 "" "--commit new\$"
+WARN=""
 
 for verdict in "use 7:7 completed success" "watch 7:7 requested" "none:"; do
   case="decide: ${verdict#*:} -> ${verdict%%:*}"

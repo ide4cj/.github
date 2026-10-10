@@ -33,15 +33,21 @@ decide() {
 
 # head_sha <branch>: the branch's head sha; empty when the branch does not exist; fails on any other error
 head_sha() {
-  local out
-  if out=$(gh api "repos/$REPO/branches/$1" --jq .commit.sha 2>&1); then
+  local out err_file err
+  err_file=$(mktemp)
+  # stderr apart: a notice gh prints there on success (an upgrade, a deprecation) is not the sha
+  if out=$(gh api "repos/$REPO/branches/$1" --jq .commit.sha 2>"$err_file"); then
+    rm -f "$err_file"
     echo "$out"
-  elif [[ $out == *"HTTP 404"* ]]; then
-    :
-  else
-    echo "$out" >&2
-    return 1
+    return
   fi
+  err=$(<"$err_file")
+  rm -f "$err_file"
+  # gh api exits 1 on any HTTP error and names its status only in the text, "(HTTP 404)" (gh 2.102;
+  # the fake gh in paired-run.test.sh prints the same): a gh that words it otherwise fails the step
+  if [[ $err == *"HTTP 404"* ]]; then return 0; fi
+  echo "$err" >&2
+  return 1
 }
 
 # runs <branch> [<sha>]: the newest ci.yml run of the branch (of that commit), "id status conclusion"
@@ -53,7 +59,7 @@ runs() {
 }
 
 paired_run() {
-  local branch=$1 sha run verdict id
+  local branch=$1 sha run verdict id watches=0
   if ! sha=$(head_sha "$branch"); then
     echo "::error::cannot read $REPO's branch $branch" >&2
     return 1
@@ -67,6 +73,13 @@ paired_run() {
       fail\ *) echo "::error::${verdict#fail }" >&2; return 1 ;;
       watch\ *)
         id=${verdict#watch }
+        # one watch lasts until the run ends; the cap stops a watch that keeps failing at once
+        # (the network, a rate limit) from polling forever, whatever timeout the client's job has
+        if [ "$watches" -ge 3 ]; then
+          echo "::error::$REPO@$branch's CI is still ${run#* } after 3 waits: $(run_url "$id")" >&2
+          return 1
+        fi
+        watches=$((watches + 1))
         echo "::notice::waiting for $REPO@$branch's CI: $(run_url "$id")" >&2
         # its own exit status is the run's, read again below
         gh run watch "$id" --repo "$REPO" --compact --interval 30 >&2 || true
