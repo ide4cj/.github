@@ -1,0 +1,22 @@
+name: Actions
+
+# the shared actions' scripts, against a fake gh
+on:
+  push:
+    branches: [master]
+    paths: [actions/**, .github/workflows/actions.yml]
+  pull_request:
+    paths: [actions/**, .github/workflows/actions.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test the actions' scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: shellcheck -x actions/cjls/*.sh
+      - run: bash actions/cjls/paired-run.test.sh
