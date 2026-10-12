@@ -38,6 +38,11 @@
       "enabled": false
     },
     {
+      "description": "cangjie-vscode: @types/vscode is the floor engines.vscode sets (vsce refuses newer types), moved by hand with it",
+      "matchPackageNames": ["@types/vscode"],
+      "enabled": false
+    },
+    {
       "description": "the rest in one PR a week",
       "matchPackageNames": ["!ide4cj/cjls"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
