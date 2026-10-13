@@ -1,0 +1,41 @@
+name: The server's settings
+description: >
+  The settings a client declares for cjls, made again from the JSON Schema of the cjls release it
+  pins (cjls's D79, D107) and pushed to the PR's branch as a commit of their own when they differ:
+  run in a PR that moves the pin, Renovate's, on a checkout of its head by a token whose push starts
+  the checks again (the organization's app). The paired branch never counts: the pin is a release.
+
+inputs:
+  version:
+    description: The release the client pins, a tag
+    required: true
+  run:
+    description: The client's command writing its settings, the binary in `$CJLS`
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - id: cjls
+      uses: ide4cj/.github/actions/cjls@master
+      with:
+        version: ${{ inputs.version }}
+        branch: ""
+    - shell: bash
+      env:
+        CJLS: ${{ steps.cjls.outputs.path }}
+        VERSION: ${{ inputs.version }}
+        RUN: ${{ inputs.run }}
+        BRANCH: ${{ github.head_ref }}
+      run: |
+        if [ -z "$CJLS" ]; then echo "::error::no cjls release $VERSION"; exit 1; fi
+        bash -c "$RUN"
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "::notice::the settings are those of cjls $VERSION"
+          exit 0
+        fi
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git commit --quiet -am "fix(cjls): the server's settings of cjls $VERSION"
+        git push origin "HEAD:$BRANCH"
+        echo "::notice::the settings of cjls $VERSION, pushed to $BRANCH"

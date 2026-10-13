@@ -4,6 +4,7 @@
   "extends": ["config:recommended", ":semanticCommits"],
   "schedule": ["after 9am on monday"],
   "labels": ["dependencies"],
+  "gitIgnoredAuthors": ["41898282+github-actions[bot]@users.noreply.github.com"],
   "customManagers": [
     {
       "description": "cangjie-vscode and cangjie-zed: .cjls-version",
