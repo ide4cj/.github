@@ -1,0 +1,28 @@
+name: client-version
+description: >
+  The version a client of cjls releases next (cjls's D132): the major and minor of the cjls release it
+  pins, a patch of its own. `version` is empty when there is nothing to release. Run in a checkout of the
+  branch with its history and tags (`fetch-depth: 0`), with `cog` on PATH (cocogitto/cocogitto-action).
+
+inputs:
+  pin:
+    description: The cjls release the client pins, `vMAJOR.MINOR.PATCH`; `.cjls-version`'s when empty
+    required: false
+    default: ""
+
+outputs:
+  version:
+    description: The next version, without its `v`, or empty
+    value: ${{ steps.next.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - id: next
+      shell: bash
+      env:
+        PIN: ${{ inputs.pin }}
+      run: |
+        version=$(bash "${GITHUB_ACTION_PATH//\\//}/next-version.sh" ${PIN:+"$PIN"})
+        if [ -z "$version" ]; then echo "::notice::nothing to release"; fi
+        echo "version=$version" >> "$GITHUB_OUTPUT"
