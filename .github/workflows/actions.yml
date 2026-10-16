@@ -1,6 +1,6 @@
 name: Actions
 
-# the shared actions' scripts, against a fake gh
+# the shared actions' scripts, against a fake gh or as functions
 on:
   push:
     branches: [master]
@@ -18,5 +18,6 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - run: shellcheck -x actions/cjls/*.sh
+      - run: shellcheck -x actions/cjls/*.sh actions/client-version/*.sh
       - run: bash actions/cjls/paired-run.test.sh
+      - run: bash actions/client-version/next-version.test.sh
