@@ -43,7 +43,8 @@ or setting stays two releases.
 
 ## Issues and labels
 
-Every open issue of the organization is on [one board](https://github.com/orgs/ide4cj/projects/1)
+Every open issue of the organization except p2cj (a separate workstream) is on
+[one board](https://github.com/orgs/ide4cj/projects/1)
 (`.github/workflows/project.yml` adds those an issue form did not), and its priority is the board's
 **Priority**, not a label, as where it stands is its **Status** (Backlog, Ready, In progress,
 Blocked — on another issue, upstream, or whoever opened it —, In review, Done):

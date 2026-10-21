@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.11"
 # ///
-"""Puts every open issue of the organization on its board, through `gh api graphql`.
+"""Puts in-scope open issues of the organization on its board, through `gh api graphql`.
 
     scripts/add_to_project.py [--dry-run]
 
@@ -21,6 +21,8 @@ import sys
 
 ORG = "ide4cj"
 PROJECT = 1
+# p2cj is a separate workstream; hourly enrollment must not undo manual removal.
+EXCLUDED_REPOSITORIES = {"p2cj"}
 
 
 def graphql(query: str, **variables: object) -> dict:
@@ -45,7 +47,10 @@ def repositories() -> list[str]:
     names, after = [], None
     while True:
         page = graphql(query, org=ORG, **({"after": after} if after else {}))["organization"]["repositories"]
-        names += [repo["name"] for repo in page["nodes"] if repo["hasIssuesEnabled"]]
+        names += [
+            repo["name"] for repo in page["nodes"]
+            if repo["hasIssuesEnabled"] and repo["name"] not in EXCLUDED_REPOSITORIES
+        ]
         if not page["pageInfo"]["hasNextPage"]:
             return sorted(names)
         after = page["pageInfo"]["endCursor"]
