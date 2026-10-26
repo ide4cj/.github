@@ -11,6 +11,26 @@ How to build and test one repository: its own README (cjls: `CLAUDE.md` and `CON
 [Conventional Commits](https://www.conventionalcommits.org), checked by [cocogitto](https://docs.cocogitto.io)
 on every commit and on the PR's title, which becomes the commit: PRs are squash-merged.
 
+## Tests
+
+The server and all editor clients follow
+[C33: Arrange, act and assert](https://github.com/ide4cj/cjls/blob/master/docs/design/03-conventions.md#c33-arrange-act-and-assert).
+Mark setup, the operation under test and result checks with separate `arrange`,
+`act` and `assert` comments, separated by blank lines. Use the language's comment
+syntax (`//` in TypeScript and Rust, `--` in Lua, `#` in Python and shell).
+Store the operation's result in a local before asserting it; do not run the
+operation inside an assertion. Successive state changes may repeat the act/assert
+sections. Mark phases that have work; no empty setup is needed for a test using
+an existing fixture.
+
+Only tests consisting solely of fixture-checking calls, such as
+`checkDiagnostics(...)`, may omit the markers: those helpers already combine
+setup, execution and assertions. A short test or an ordinary assertion is not
+that exception. Apply this convention when adding or modifying tests.
+
+Release clients, temporary files and replaced editor state even if a test fails
+or skips, using teardown or a `finally` equivalent.
+
 ## A change across the server and a client
 
 The server does what LSP can; a client finds the binary, passes settings, and gives the server's
