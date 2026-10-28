@@ -81,7 +81,14 @@ The current goal is three milestones of cjls, worked on side by side:
 project before any feature), [**Inference**](https://github.com/ide4cj/cjls/milestone/2) (cjls#48 to
 its end and the requests it opens) and [**Macro expansion**](https://github.com/ide4cj/cjls/milestone/3)
 (cjls#47). [**Cleanup**](https://github.com/ide4cj/cjls/milestone/4), every module refined
-(cjls#206), comes after them: its issues are P2 until then. A new goal is a change of this paragraph.
+(cjls#206), comes after them: its issues are P2 until then.
+Before Cleanup and the announced MVP, [**Semantic validation before MVP**](https://github.com/ide4cj/cjls/milestone/7)
+must also pass: [cjls#527](https://github.com/ide4cj/cjls/issues/527) tracks compiler-confirmed
+diagnostic gaps and regression checks on invalid as well as valid code. Its issues are P1 and
+start in Backlog. Follow [the roadmap to Cleanup](https://github.com/ide4cj/cjls/issues/550)
+for the task checklist, integration order and Gantt chart. Update that map when its scope or order
+changes. This gate supplements Inference and Macro expansion; it does not claim complete compiler
+parity. A new goal is a change of this paragraph.
 
 An issue's kind is its type (Bug, Feature, Task), set for the whole organization. [`labels.yml`](labels.yml) is every repository's labels, synced by `.github/workflows/labels.yml`:
 
